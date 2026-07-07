@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Queen Sasha 👑 | WhatsApp Pairing</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 50%, #d76d99 100%);
+    padding: 20px;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(180, 30, 90, 0.25);
+  }
+  .crown { font-size: 48px; }
+  h1 {
+    color: #c2185b;
+    margin: 10px 0 4px;
+    font-size: 26px;
+  }
+  p.subtitle {
+    color: #a15a72;
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 2px solid #f3b6c8;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+  input:focus { border-color: #d6336c; }
+  button {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #d6336c, #a61e4d);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  button:hover { transform: translateY(-2px); }
+  button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  #status {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #8a3b57;
+    min-height: 20px;
+  }
+  #code-box {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 16px;
+    background: #fff0f5;
+    border: 2px dashed #d6336c;
+  }
+  #code-box .label {
+    font-size: 13px;
+    color: #a15a72;
+    margin-bottom: 6px;
+  }
+  #pairing-code {
+    font-size: 30px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    color: #c2185b;
+  }
+  footer {
+    margin-top: 24px;
+    font-size: 12px;
+    color: #c98aa3;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="crown">👑</div>
+    <h1>Queen Sasha</h1>
+    <p class="subtitle">Link your WhatsApp number to bring her online 💖</p>
 
+    <input type="text" id="phone" placeholder="e.g. 2557XXXXXXXX (with country code)" />
+    <button id="pair-btn">💌 Get Pairing Code</button>
+
+    <div id="status"></div>
+
+    <div id="code-box">
+      <div class="label">✨ Your Pairing Code ✨</div>
+      <div id="pairing-code">------</div>
+      <div class="label" style="margin-top:10px;">Open WhatsApp → Linked Devices → Link with phone number, then enter this code.</div>
+    </div>
+
+    <footer>💖 Powered by Queen Sasha 👑</footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
