@@ -1,7 +1,7 @@
 /**
- * Queen Sasha 👑 - Entry Point
- * Boots the web server (pairing UI) + socket.io, then resumes any saved
- * WhatsApp sessions and listens for new pairing requests from the browser.
+ * Queen Sasha 👑 - Entry Point (Heroku Safe)
+ * Boots web pairing UI + socket.io
+ * Resumes saved WhatsApp sessions safely
  */
 
 const express = require("express");
@@ -16,35 +16,65 @@ const registerSocketHandlers = require("./Resources/socket/socket");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
+/* =========================
+   🔧 MIDDLEWARES
+========================= */
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "Resources", "web")));
 
+/* =========================
+   🌐 ROUTES
+========================= */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "Resources", "web", "index.html"));
 });
 
 app.get("/health", (req, res) => {
-  res.json({ status: "ok", bot: settings.BOT_NAME });
+  res.status(200).json({
+    status: "ok",
+    bot: settings.BOT_NAME,
+    uptime: process.uptime()
+  });
 });
 
-// 💌 Wire up the socket.io pairing logic (browser <-> bot)
+/* =========================
+   💌 SOCKET.IO (PAIRING)
+========================= */
 registerSocketHandlers(io);
 
-server.listen(settings.PORT, () => {
-  console.log(chalk.magentaBright(`\n👑 ${settings.BOT_NAME} is starting up...`));
-  console.log(chalk.cyan(`🌐 Web pairing page running on port ${settings.PORT}`));
-  console.log(chalk.green("💖 Open the web page to pair your WhatsApp number.\n"));
+/* =========================
+   🚀 SERVER START (HEROKU SAFE)
+========================= */
+const PORT = process.env.PORT || settings.PORT || 3000;
 
-  // ✨ Bring back any sessions that were already linked before a restart/redeploy
-  resumeExistingSessions(io);
+server.listen(PORT, () => {
+  console.log(chalk.magentaBright(`\n👑 ${settings.BOT_NAME} is LIVE`));
+  console.log(chalk.cyan(`🌐 Web pairing running on port ${PORT}`));
+  console.log(chalk.green("💖 Open the web page to pair your WhatsApp number\n"));
+
+  // Resume saved sessions AFTER server is ready
+  setTimeout(() => {
+    resumeExistingSessions(io);
+  }, 2000);
 });
 
+/* =========================
+   🛡️ SAFE ERROR HANDLING
+========================= */
 process.on("uncaughtException", (err) => {
-  console.log(chalk.red(`💔 Uncaught Exception: ${err.message}`));
+  console.error(chalk.red("💔 Uncaught Exception"));
+  console.error(err);
 });
 
-process.on("unhandledRejection", (err) => {
-  console.log(chalk.red(`💔 Unhandled Rejection: ${err?.message || err}`));
+process.on("unhandledRejection", (reason) => {
+  console.error(chalk.red("💔 Unhandled Rejection"));
+  console.error(reason);
 });
