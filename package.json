@@ -1,22 +1,26 @@
 {
   "name": "queen-sasha",
-  "version": "1.0.0",
-  "description": "Queen Sasha 👑 - A stylish multi-device WhatsApp bot with web pairing",
+  "version": "1.0.1",
+  "description": "Queen Sasha 👑 - A stable multi-device WhatsApp bot with web pairing (Heroku Ready)",
   "main": "start.js",
   "author": "QueenSasha",
   "license": "MIT",
+
   "engines": {
-    "node": ">=18.x"
+    "node": "20.x",
+    "npm": "10.x"
   },
+
   "scripts": {
     "start": "node start.js"
   },
+
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.9",
     "express": "^4.19.2",
     "socket.io": "^4.7.5",
     "pino": "^9.3.2",
-    "qrcode": "^1.5.3",
+    "qrcode": "^1.5.4",
     "chalk": "^4.1.2",
     "fs-extra": "^11.2.0",
     "moment-timezone": "^0.5.45",
