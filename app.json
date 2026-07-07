@@ -1,0 +1,43 @@
+{
+  "name": "Queen Sasha 👑",
+  "description": "A stylish multi-device WhatsApp bot with web-based pairing.",
+  "keywords": ["whatsapp", "bot", "baileys", "queensasha", "nodejs"],
+  "website": "https://github.com/yourusername/QueenSasha",
+  "repository": "https://github.com/yourusername/QueenSasha",
+  "stack": "heroku-22",
+  "buildpacks": [
+    { "url": "heroku/nodejs" }
+  ],
+  "env": {
+    "BOT_NAME": {
+      "description": "Display name for the bot",
+      "value": "Queen Sasha 👑"
+    },
+    "OWNER_NUMBER": {
+      "description": "Owner WhatsApp number with country code, no + sign (e.g. 2557XXXXXXXX)",
+      "required": true
+    },
+    "OWNER_NAME": {
+      "description": "Owner's display name",
+      "value": "Queen"
+    },
+    "PREFIX": {
+      "description": "Command prefix",
+      "value": "."
+    },
+    "PUBLIC_MODE": {
+      "description": "true = anyone can use commands, false = owner only",
+      "value": "true"
+    },
+    "TIMEZONE": {
+      "description": "Timezone for the bot",
+      "value": "Africa/Nairobi"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "eco"
+    }
+  }
+}
