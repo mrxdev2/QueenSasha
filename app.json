@@ -4,7 +4,7 @@
   "keywords": ["whatsapp", "bot", "baileys", "queensasha", "nodejs"],
   "website": "https://github.com/yourusername/QueenSasha",
   "repository": "https://github.com/yourusername/QueenSasha",
-  "stack": "heroku-22",
+  "stack": "heroku-24",
   "buildpacks": [
     { "url": "heroku/nodejs" }
   ],
@@ -15,6 +15,7 @@
     },
     "OWNER_NUMBER": {
       "description": "Owner WhatsApp number with country code, no + sign (e.g. 2557XXXXXXXX)",
+      "value": "",
       "required": true
     },
     "OWNER_NAME": {
@@ -32,12 +33,6 @@
     "TIMEZONE": {
       "description": "Timezone for the bot",
       "value": "Africa/Nairobi"
-    }
-  },
-  "formation": {
-    "web": {
-      "quantity": 1,
-      "size": "eco"
     }
   }
 }
