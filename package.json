@@ -24,6 +24,7 @@
     "chalk": "^4.1.2",
     "fs-extra": "^11.2.0",
     "moment-timezone": "^0.5.45",
-    "axios": "^1.7.7"
+    "axios": "^1.7.7",
+    "yt-search": "^2.10.4"
   }
 }

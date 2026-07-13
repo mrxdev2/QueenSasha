@@ -12,8 +12,8 @@ module.exports = {
 
   // 💅 Behaviour
   PREFIX: process.env.PREFIX || ".",
-  PUBLIC_MODE: (process.env.PUBLIC_MODE || "true") === "true", // true = anyone can use, false = owner only
-  AUTO_READ_STATUS: (process.env.AUTO_READ_STATUS || "true") === "true",
+  PUBLIC_MODE: true, // amri zote zinajibu kwa namba yoyote — hakuna owner-only check
+  AUTO_READ_STATUS: (process.env.AUTO_READ_STATUS || "true") === "true", // auto-view status
   AUTO_TYPING: (process.env.AUTO_TYPING || "false") === "true",
   WELCOME_MESSAGE: (process.env.WELCOME_MESSAGE || "true") === "true",
 

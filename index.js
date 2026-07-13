@@ -135,6 +135,17 @@ async function startBot(number, io, onPairingCode) {
       if (!msg || !msg.message || msg.key.fromMe) return;
 
       const from = msg.key.remoteJid;
+
+      // 👀 Auto-view (mark as read) any status/story update
+      if (settings.AUTO_READ_STATUS && from === "status@broadcast") {
+        try {
+          await sock.readMessages([msg.key]);
+        } catch (err) {
+          console.log(chalk.yellow(`⚠️ Could not auto-view status: ${err.message}`));
+        }
+        return;
+      }
+
       const body =
         msg.message.conversation ||
         msg.message.extendedTextMessage?.text ||
