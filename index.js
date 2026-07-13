@@ -1,7 +1,6 @@
 /**
- * Queen Sasha 👑 - Core Bot Engine
+ * Queen Sasha 👑 - Core Bot Engine (Safi bila AI)
  * Built on @whiskeysockets/baileys (multi-device WhatsApp Web API)
- * Handles: connection, pairing code, auto-reconnect, message routing, plugins.
  */
 
 const {
@@ -19,7 +18,7 @@ const path = require("path");
 const chalk = require("chalk");
 const settings = require("./settings");
 
-// Keep track of active socket connections, keyed by session id (phone number)
+// Active sockets keyed by session id (phone number)
 const activeSockets = {};
 let cachedPlugins = null;
 
@@ -87,7 +86,7 @@ async function startBot(number, io, onPairingCode) {
 
   activeSockets[sessionId] = sock;
 
-  // 💕 Request a pairing code if this session isn't registered yet
+  // 💕 Request a pairing code if this session isn't registered yet (Inatuma kwenye Web kupitia socket.io)
   if (!sock.authState?.creds?.registered) {
     try {
       await new Promise((r) => setTimeout(r, 1500)); // small delay helps stability
@@ -128,7 +127,7 @@ async function startBot(number, io, onPairingCode) {
     }
   });
 
-  // 🌸 Message handling
+  // 🌸 Message & Reaction handling (No AI)
   sock.ev.on("messages.upsert", async (m) => {
     try {
       const msg = m.messages?.[0];
@@ -136,7 +135,7 @@ async function startBot(number, io, onPairingCode) {
 
       const from = msg.key.remoteJid;
 
-      // 👀 Auto-view (mark as read) any status/story update
+      // 👀 Auto-view (mark as read) any status/story update if enabled
       if (settings.AUTO_READ_STATUS && from === "status@broadcast") {
         try {
           await sock.readMessages([msg.key]);
@@ -153,6 +152,7 @@ async function startBot(number, io, onPairingCode) {
         msg.message.videoMessage?.caption ||
         "";
 
+      // Kama haianza na prefix ya bot, puuza kabisa (No AI fallback)
       if (!body.startsWith(settings.PREFIX)) return;
 
       const args = body.slice(settings.PREFIX.length).trim().split(/\s+/);
@@ -163,6 +163,7 @@ async function startBot(number, io, onPairingCode) {
 
       if (plugin) {
         if (settings.AUTO_TYPING) await sock.sendPresenceUpdate("composing", from);
+        // Execute dynamic plugins (including reactions or other functions)
         await plugin.execute(sock, msg, args, { from, settings, commandName });
       }
     } catch (err) {
@@ -174,7 +175,7 @@ async function startBot(number, io, onPairingCode) {
 }
 
 /**
- * ✨ Auto-resume any sessions that already exist on disk (e.g. after a restart/deploy).
+ * ✨ Auto-resume any sessions that already exist on disk (using Queen Sasha file structure).
  */
 async function resumeExistingSessions(io) {
   const sessionsRoot = path.join(__dirname, settings.SESSION_DIR);
